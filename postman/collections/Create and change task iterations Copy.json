@@ -1,0 +1,404 @@
+{
+	"info": {
+		"_postman_id": "78cb7a72-2658-4686-96ff-3a2dcd942817",
+		"name": "Create and change task iterations Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "32697811-78cb7a72-2658-4686-96ff-3a2dcd942817"
+	},
+	"item": [
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d8f620a4-5030-4e86-aedc-4ca3817c652f",
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"pm.environment.set('token', jsonData.id_token)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "48d9c91f-fe78-4b2c-9b13-2201ca1a1e5a",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9,it-IT;q=0.8,it;q=0.7,fr-FR;q=0.6,fr;q=0.5,de-DE;q=0.4,de;q=0.3,ru;q=0.2"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Origin",
+						"value": "https://sqlverifier-50d286d70656.herokuapp.com"
+					},
+					{
+						"key": "Referer",
+						"value": "https://sqlverifier-50d286d70656.herokuapp.com/login"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-origin"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"119\", \"Chromium\";v=\"119\", \"Not?A_Brand\";v=\"24\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					},
+					{
+						"key": "x-mock-match-request-headers",
+						"value": "400"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"{{adminLogin}}\",\"password\":\"{{adminPassword}}\",\"rememberMe\":false}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/authenticate",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get tasks list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "68adceeb-4289-497f-9598-4bec545615ef",
+						"exec": [
+							"let responseData = pm.response.json();",
+							"let currentAmountOfTasks = responseData.length;",
+							"console.log('Current amount of tasks: ', currentAmountOfTasks);",
+							"",
+							"pm.environment.set('currentAmountOfTasks', currentAmountOfTasks)",
+							"pm.environment.set(\"ids\", [])",
+							"",
+							"if(currentAmountOfTasks < pm.environment.get('targetNumberOfTasks')) {",
+							"    postman.setNextRequest('create a task');",
+							"} else {",
+							"    pm.environment.set('lastID', responseData[responseData.length - 1].id);",
+							"    postman.setNextRequest('change task text');",
+							"}",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "67265cae-a7a1-4df6-b412-8113a9047efc",
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "2e80a97c-0eca-443e-bfef-a86cd2339107",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/tasks?page=0&size=100",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"tasks"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "100"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create a task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a28d6bc5-7bbc-426c-bc7f-0e57bde0b669",
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Your test name\", function () {",
+							"    pm.expect(jsonData.text).to.eql(\"some text\");",
+							"});",
+							"",
+							"const ids = pm.environment.get(\"ids\")",
+							"console.log(\"jsonData.id is \" + jsonData.id)",
+							"ids.push(jsonData.id)",
+							"console.log(ids)",
+							"pm.environment.set(\"ids\", ids)",
+							"",
+							"pm.environment.set('lastID', jsonData.id)",
+							"",
+							"let currentAmountOfTasks = pm.environment.get(\"currentAmountOfTasks\");",
+							"currentAmountOfTasks++;",
+							"pm.environment.set('currentAmountOfTasks', currentAmountOfTasks)",
+							"",
+							"if(currentAmountOfTasks < pm.environment.get('targetNumberOfTasks')) {",
+							"    postman.setNextRequest(\"create a task\")",
+							"} else {",
+							"    postman.setNextRequest('change task text')",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "717e1945-bc82-476b-977b-dba6dc6c9305",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"text\": \"some text\",\n  \"answer\": \"string\",\n  \"title\": \"string\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/tasks",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change task text",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ca750419-3e0c-4b21-b4e2-b5368234f699",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "86633ac9-cbfe-4341-a97e-67815b2e2d4e",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": \"{{lastID}}\",\n  \"text\": \"some new new text\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/tasks/{{lastID}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"tasks",
+						"{{lastID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get task data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3c586ff0-a9b6-4f46-b92b-8b331209f6a8",
+						"exec": [
+							"let arr = pm.environment.get('ids')",
+							"",
+							"arr.forEach((id)=>{",
+							"    pm.sendRequest(",
+							"        {url: `http://localhost:8080/api/tasks/${id}`,",
+							"        method: 'DELETE',",
+							"        header:",
+							"        {'Authorization': 'Bearer ' + pm.environment.get('token'),",
+							"        'accept': '*/*'}",
+							"        }",
+							"        , function (err, response) {",
+							"        console.log(response);",
+							"    });",
+							"})",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "58b8d7de-ea49-4c3b-a452-a32ef3efd3f9",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/tasks/{{lastID}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"tasks",
+						"{{lastID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "7e0bdeca-c22c-441e-a145-cf454e960f74",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "f9112a30-2a45-44a0-b33d-6c813d7ab46e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
