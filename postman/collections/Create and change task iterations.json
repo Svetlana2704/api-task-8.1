@@ -15,9 +15,22 @@
 						"id": "a0da59c1-60b9-4dd3-ac81-4c97817b62a6",
 						"exec": [
 							"let jsonData = pm.response.json();",
-							"pm.environment.set('token', jsonData.id_token)"
+							"pm.environment.set('token', jsonData.id_token)",
+							"",
+							"pm.test(\"Response schema is valid\", function () {",
+							"  var schema = {",
+							"    type: \"object\",",
+							"    properties: {",
+							"      id_token: { type: \"string\" }",
+							"    },",
+							"    required: [\"id_token\"]",
+							"  };",
+							"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+							"});",
+							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -121,9 +134,31 @@
 							"if(currentAmountOfTasks < pm.environment.get('targetNumberOfTasks')) {",
 							"    postman.setNextRequest('create a task')",
 							"} else {",
-							"    postman.setNextRequest('change task text')}"
+							"    postman.setNextRequest('change task text')}",
+							"",
+							"",
+							"pm.test(\"Response schema is valid\", function () {",
+							"    var schema = {",
+							"        type: \"array\",",
+							"        items: {",
+							"            type: \"object\",",
+							"            properties: {",
+							"                id: { type: \"number\" },",
+							"                text: { type: \"string\" },",
+							"                answer: { type: \"string\" },",
+							"                title: { type: \"string\" }",
+							"            },",
+							"            required: [\"id\", \"text\", \"answer\", \"title\"]",
+							"        }",
+							"    };",
+							"",
+							"    var response = pm.response.json();",
+							"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+							"});",
+							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				},
 				{
@@ -133,7 +168,8 @@
 						"exec": [
 							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -206,9 +242,24 @@
 							"} else {",
 							"    postman.setNextRequest('change task text')",
 							"}",
-							""
+							"",
+							"pm.test(\"Response schema is valid\", function () {",
+							"    var schema = {",
+							"        type: \"object\",",
+							"        properties: {",
+							"            id: { type: \"number\" },",
+							"            text: { type: \"string\" },",
+							"            answer: { type: \"string\" },",
+							"            title: { type: \"string\" }",
+							"        },",
+							"        required: [\"id\", \"text\", \"answer\", \"title\"],",
+							"    };",
+							"",
+							"    pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+							"});"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -258,7 +309,19 @@
 						"exec": [
 							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "de0df552-e510-4477-98d2-cbaa3cf607df",
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -323,9 +386,20 @@
 							"})",
 							"",
 							"",
+							"pm.test(\"Response schema is valid\", function () {",
+							"    var schema = {",
+							"        type: \"object\",",
+							"        properties: {",
+							"            id: { type: \"number\" },",
+							"            text: { type: \"string\" },",
+							"            answer: { type: \"string\" },",
+							"            title: { type: \"string\" }",
+							"        },",
+							"        required: [\"id\", \"text\", \"answer\", \"title\"],",
+							"    };",
 							"",
-							"",
-							""
+							"    pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+							"});"
 						],
 						"type": "text/javascript",
 						"packages": {}
