@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "43299994-600a-4b78-9919-12ff3b22cad5",
-		"name": "Create and change task iterations",
+		"name": "Collection1",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_uid": "32697811-43299994-600a-4b78-9919-12ff3b22cad5"
 	},
