@@ -33,5 +33,6 @@ jobs:
       - name: Run a multi-line script
         run: |
           curl -o- "https://dl-cli.pstmn.io/install/linux64.sh"
+          sh install.sh
           postman login --with-api-key PMAT-01HZWX39KNCSXE31AHJ22XSDWP
           postman collection run "postman/collections/Create%20and%20change%20task%20iterations.json" - e "Environment%20HW%208.1%20Lyapuntsova.postman_environment.json"
