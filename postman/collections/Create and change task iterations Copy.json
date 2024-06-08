@@ -318,7 +318,7 @@
 							"",
 							"arr.forEach((id)=>{",
 							"    pm.sendRequest(",
-							"        {url: `http://localhost:8080/api/tasks/${id}`,",
+							"        {url: `https://sqlverifier-live-6e21ca0ed768.herokuapp.com/api/tasks/${id}`,",
 							"        method: 'DELETE',",
 							"        header:",
 							"        {'Authorization': 'Bearer ' + pm.environment.get('token'),",
