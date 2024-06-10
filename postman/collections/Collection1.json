@@ -221,6 +221,7 @@
 						"id": "b52109e5-cf3c-4ace-831d-e0571986eeb6",
 						"exec": [
 							"let jsonData = pm.response.json();",
+							"pm.environment.set('lastID', jsonData.id)",
 							"",
 							"pm.test(\"Your test name\", function () {",
 							"    pm.expect(jsonData.text).to.eql(\"some text\");",
