@@ -98,12 +98,13 @@
 					},
 					{
 						"key": "x-mock-match-request-headers",
-						"value": "400"
+						"value": "",
+						"disabled": true
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"username\":\"{{adminLogin}}\",\"password\":\"{{adminPassword}}\",\"rememberMe\":false}"
+					"raw": "{\r\n    \"username\": \"{{adminLogin}}\",\r\n    \"password\": \"{{adminPassword}}\",\r\n    \"rememberMe\": false\r\n}"
 				},
 				"url": {
 					"raw": "{{baseUrl}}/authenticate",
@@ -374,7 +375,8 @@
 							"",
 							"arr.forEach((id)=>{",
 							"    pm.sendRequest(",
-							"        {url: `https://sqlverifier-live-6e21ca0ed768.herokuapp.com/api/tasks/${id}`,",
+							"        {url: `",
+							"http://localhost:8080/api/tasks/${id}`,",
 							"        method: 'DELETE',",
 							"        header:",
 							"        {'Authorization': 'Bearer ' + pm.environment.get('token'),",
