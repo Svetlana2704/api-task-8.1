@@ -16,8 +16,7 @@ on:
   # Triggers the workflow every night at 00:00, every day at 11:15, and every day at 09:15
   schedule:
     - cron: '0 0 * * *'
-    - cron: '15 11 * * *'
-    - cron: '15 8 * * *'
+    - cron: '17 8 * * *'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
